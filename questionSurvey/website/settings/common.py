@@ -78,47 +78,24 @@ INSTALLED_APPS += (
     'apps',
 )
 
-## Middlewares settings
-MIDDLEWARE_CLASSES += (
-    # 'website.middleware.GatewayMiddleware',
-    # 'website.middleware.AuthMiddleware',
-)
 
-# user backends
-# AUTH_USER_MODEL = 'common.SmUser'
-# AUTHENTICATION_BACKENDS = (
-#     "common.user.backends.AuthenticationBackend",
-# )
-
-# user skip urls
-SKIP_AUTHENTICATION_URLS = [
-    # '/user/code/',
-    # '/user/login/',
-    # '/hello/hello-world/',
-    # '/hello/exception/',
-    # '/hello/needcode-exception/',
-    # '/user/asign-user/',
-    #
-    # # 外部 api, 由白名单确保安全
-    # "/apps/report/get-report/",
-    # "/apps/report/update-report/",
+TEMPLATES = [
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+            ],
+        },
+    },
 ]
 
-SKIP_AUTHORIZATION_URLS = [
-    # '/user/logout/',
-    # '/user/change-password/',
-    # '/user/get-user-menus-apis/',
-    # '/user/asign-user/',
-    #
-    # #"/hello/auth-hello/",
-    # # "/apps/common/common-param/",
-    # "/apps/common/brand-list/",
-    # "/apps/common/category-list/",
-    # "/apps/common/sales-point-list/",
-    # # "/apps/common/report-template-list/",
-    # "/apps/common/throw-account-upload/",
 
-] + SKIP_AUTHENTICATION_URLS
 
 # session
 SESSION_ENGINE = 'redis_sessions.session'
