@@ -19,5 +19,5 @@ logger = Logger.getLoggerInstance()
 
 
 def test_hello():
-    data = test.objects.all().values('name', "addr")
+    data = Test.objects.all().values('name', "addr")
     return list(data)

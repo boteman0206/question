@@ -21,5 +21,5 @@ def question(request):
     '''
     data = apis.test_hello()
     print data
-    return render(request, "index.html")
+    return render(request, "question.html")
 
