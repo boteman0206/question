@@ -18,4 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^apps/', include("apps.urls")),
+    url(r'^$', "apps.question.views.index"),
 ]

@@ -9,13 +9,17 @@ from django.utils.http import urlquote
 import json
 
 
-def report_config_list(request):
+def index(request):
+    return render(request, 'index.html')
+
+
+def question(request):
     '''
-    报告->活动有效性评估->报告配置列表
+
     :param request:
     :return:
     '''
     data = apis.test_hello()
     print data
-    # return JsonResponse(data=data, safe=False)
     return render(request, "index.html")
+

@@ -6,5 +6,5 @@ from django.conf.urls import url, patterns
 import views
 
 urlpatterns = patterns("apps.question.views",
-    url(r"^hello/$", views.report_config_list),
+    url(r"^hello/$", views.question),
 )
