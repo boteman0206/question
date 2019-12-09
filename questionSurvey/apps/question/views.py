@@ -4,11 +4,11 @@ from __future__ import unicode_literals
 
 from django.http.response import JsonResponse, HttpResponse
 from django.shortcuts import render
+from common.models import *
+from datetime import datetime
 from . import apis
 from django.utils.http import urlquote
 import json
-from datetime import datetime
-from common.models import *
 
 
 def index(request):
@@ -68,7 +68,7 @@ def save(request):
     print('ip = ', ip)
     print('id = ', id)
     # todo 保存访问的页面答案
-    if answer and answer not in ["开始挑战", "重新玩一次"]:
+    if answer and answer not in ["开始测试", "重新玩一次"]:
         AnswerInformation(ip=ip, question_id=id, answer=answer, create_time=datetime.now()).save()
     if answer == "重新玩一次":  # 重新开始
         vm = [{"id": "0"}]
@@ -84,6 +84,7 @@ def save(request):
     print(vm)
     print(request.COOKIES)
     print(request.session.keys())
+    print request.session.session_key
     return JsonResponse(data=vm, safe=False)
 
 
