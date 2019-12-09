@@ -52,7 +52,7 @@
             width: 100%;
             height: 2rem;
             position: relative;
-            margin-top: 1rem;
+            margin-top: 0.8rem;
         }
 
         li:first-child {
@@ -95,9 +95,15 @@
 </head>
 <body>
 <div class="containerDiv">
+{% if questions.0.id <= 11 %}
     <div class="header" id="content">
         <span>{{ questions.0.name }}</span>
     </div>
+    {% else %}
+{#    <div class="header" id="content">#}
+{#        <span>{{ questions.0.name }}</span>#}
+{#    </div>#}
+{% endif %}
 
     {% if questions.0.id <= 13 %}
         <div class="img">
