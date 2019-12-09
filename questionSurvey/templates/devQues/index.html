@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,height=device-height initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/static/layui-v2.5.5/layui/css/layui.css">
+    <script src="/static/jquery-3.3.1.js"></script>
+    <script src="/static/layui-v2.5.5/layui/layui.js"></script>
+
+
+    <title>question首页</title>
+    <style>
+        html, body{
+            background: #1b6d85;
+        }
+        .containerDiv {
+            width: 80%;
+            margin: 0.2rem auto;
+        }
+
+        .header {
+            margin-top: 1rem;
+            margin-left: 0.3rem;
+            word-wrap: break-word;
+            margin-right: 0.3rem;
+            font-size: 1rem;
+        }
+
+        .img {
+            text-align: center;
+        }
+
+        .img img {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .chooice {
+            flex: auto;
+        }
+
+        li {
+            width: 100%;
+            height: 2rem;
+            position: relative;
+            margin-top: 0.5rem;
+        }
+
+        li:first-child {
+        {#display: inline-block;#} float: left;
+            margin-bottom: 0.2rem;
+        }
+
+        button {
+            margin-top: 1rem;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 50%;
+            border: 0px;
+            {#background-color: #ff6700;#}
+            color: white;
+            font-size:0.5rem ;
+            position: absolute;
+            left: -3%;
+            top: -37%;
+        }
+
+        li .answer {
+            width: 95%;
+            display: inline-block;
+            height: 1.5rem;
+            text-align: center;
+            line-height: 1.5rem;
+            background-color: #f9f2f4;
+            margin-left: 1%;
+
+            {#position: absolute;#}
+            {#left: 4%;#}
+            {#top: 35%;#}
+        }
+        .clear_fix{
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+<div class="containerDiv">
+    <div class="header" id="content">
+        {{ questions.0.name }}
+    </div>
+
+    {% if questions.0.id <= 11 %}
+        <div class="img">
+        {#        通过后端的图片name控制#}
+            <img src="{{ questions.0.pngname }}" alt="" id="icon">
+        </div>
+    {% endif %}
+
+<div class="chooice">
+    <ul>
+        {% if questions %}
+            {% if questions.0.answer %}
+                {% for answer in questions.0.answer  %}
+                    <li>
+                        {% if forloop.counter == 1 and questions.0.id != 1 and questions.0.id != 12 and questions.0.id != 13%}
+                            <div>
+                                 <button style="background: #00F7DE">A</button>
+                            </div>
+                        {% endif %}
+                    {% if forloop.counter == 2 %}
+                            <div>
+                                 <button style="background: #3c763d">B</button>
+                            </div>
+                        {% endif %}
+                    {% if forloop.counter == 3 %}
+                            <div>
+                                 <button style="background: #8a6d3b;">C</button>
+                            </div>
+                        {% endif %}
+                        <div class="answer">{{ answer }}</div>
+                    </li>
+                <div class="clear_fix"></div>
+                    {% endfor %}
+                {% endif %}
+        {% endif %}
+    </ul>
+</div>
+{#    <div class="chooice">#}
+{#        <ul>#}
+{#            <li>#}
+{#                <div>#}
+{#                    <button>A</button>#}
+{#                </div>#}
+{#                <div class="answer">是</div>#}
+{#            </li>#}
+{#            <div class="clear_fix"></div>#}
+{#            <li>#}
+{#                <div>#}
+{#                    <button>B</button>#}
+{#                </div>#}
+{#                <div class="answer">否</div>#}
+{#            </li>#}
+{#            <div class="clear_fix"></div>#}
+{#            <li>#}
+{#                <div>#}
+{#                    <button>C</button>#}
+{#                </div>#}
+{#                <div class="answer">不确定</div>#}
+{#            </li>#}
+{#            <div class="clear_fix"></div>#}
+{#        </ul>#}
+{#    </div>#}
+
+</div>
+</body>
+<script>
+    let html = document.documentElement;
+    let width = html.getBoundingClientRect().width;
+    let fs = width / 16;
+    html.style.fontSize = fs + 'px';
+    let answers = document.getElementsByClassName('answer');
+    for (let i = 0; i < answers.length; i++) {
+     answers[i].onclick = function () {  //对每一个answer标签添加单击事件
+         {#1：获取选择的答案 提交进行保存#}
+         let value = this.innerHTML;
+         {#let img=document.getElementById('icon');#}
+         {#let header = document.getElementById('content');#}
+         {#console.log(header.innerText);#}
+         $.ajax({
+                url: '/save/',
+                type: 'post',
+                data: {
+                    'value': value,
+                    "id": {{ questions.0.id }}
+                },
+            success: function (data) {
+                    console.log(data)
+                    if (data[0].id == "0"){
+                         location.href='/?id=' + 0;
+                    }else{
+                         location.href='/?id=' + data[0].id;
+                    }
+                {#console.log(data);#}
+                {#console.log(data[0].name);#}
+                {#header.innerText=data[0].name;#}
+                {#img.src="/static/img/爱他美测试改转曲-0" + data[0].id + ".png";#}
+            }
+        })
+       };
+
+    }
+    /**$(function(){
+      alert('tregherg')
+    });*/
+
+</script>
+</html>
