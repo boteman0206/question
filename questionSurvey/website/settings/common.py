@@ -119,3 +119,7 @@ SESSION_KEY_MENU_API_LIST = "MENU-API-LIST"
 SESSION_COOKIE_SECURE = False
 SESSION_COOKIE_HTTPONLY = False
 
+MIDDLEWARE_CLASSES += (
+    'website.middleware.GatewayMiddleware',
+    # 'website.middleware.AuthMiddleware',
+)

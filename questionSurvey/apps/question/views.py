@@ -13,7 +13,7 @@ import json
 
 def index(request):
     """
-    首页进去
+    第一次是从首页跳转过来： 通过id获取下一个答案和题目选项
     答一道题目： 记录一次， 中途退出不影响之前的答题
     :param request:
     :return:
@@ -25,15 +25,18 @@ def index(request):
         ip = request.META.get('REMOTE_ADDR')
 
     id = request.GET.get('id')
+
     try:
         if id:
             id = int(id) + 1
+            if id > 13:
+                raise Exception("请输入正确的访问方式")
             questions = Question.objects.filter(id=id).values('id', 'name', "answer", 'pngname')
         else:
             id = 1
-            questions = Question.objects.filter(id= id).values('id', 'name', "answer", 'pngname')
+            questions = Question.objects.filter(id=id).values('id', 'name', "answer", 'pngname')
     except Exception:
-        raise Exception("id异常")
+        raise Exception("请输入正确的访问方式")
 
     for i in list(questions):
         answer = i.get("answer")
@@ -49,7 +52,7 @@ def index(request):
 
 def save(request):
     """
-    第一次是从首页跳转过来： 通过id获取下一个答案和题目选项
+
     需要保存访问的页面
     :param request:
     :return:
