@@ -28,7 +28,7 @@
             color: #003891;
         }
 
-        .imglast, .img {
+        .imglast, .img , .imglogo{
             text-align: center;
         }
 
@@ -38,11 +38,16 @@
         }
 
         .imglast img{
-            width: 50%;
+            width: 100%;
             margin-top: 0rem;
-            height: 50%;
 
         }
+        .imglogo img{
+            width: 100%;
+            margin-top: 0rem;
+            height: 10%;
+        }
+
 
         .chooice {
             flex: auto;
@@ -95,22 +100,47 @@
 </head>
 <body>
 <div class="containerDiv">
+
 {% if questions.0.id <= 11 %}
     <div class="header" id="content">
-        <span>{{ questions.0.name }}</span>
+        {% if questions.0.id > 1 %}
+            <span style="color: #0271b7">
+            {% autoescape off %}
+                {{ questions.0.name|slice:"4" }}
+            {% endautoescape %}
+        </span>
+        {% autoescape off %}
+            {{ questions.0.name | slice:'4:'}}
+        {% endautoescape %}
+            {% else %}
+            <span>{{ questions.0.name}}</span>
+            {% endif %}
     </div>
-    {% else %}
-{#    <div class="header" id="content">#}
-{#        <span>{{ questions.0.name }}</span>#}
-{#    </div>#}
 {% endif %}
 
-    {% if questions.0.id <= 13 %}
-        <div class="img">
-        {#        通过后端的图片name控制#}
-            <img src="{{ questions.0.pngname }}" alt="" id="icon">
-        </div>
-    {% endif %}
+
+
+{% if questions.0.id >= 12 %}
+    <div class="imglogo">
+{#            通过后端的图片name控制#}
+        <img src="/static/img/爱他美4期微商城-07.png" alt="" id="icon">
+    </div>
+
+{% endif %}
+{##}
+{#{% if questions.0.id == 13 %}#}
+{#    <div class="imglogo">#}
+    {#        通过后端的图片name控制#}
+{#        <img src="/static/img/爱他美4期微商城-061.png" alt="" id="icon">#}
+{#    </div>#}
+{##}
+{#{% endif %}#}
+
+
+<div class="img">
+{#        通过后端的图片name控制#}
+    <img src="{{ questions.0.pngname }}" alt="" id="icon">
+</div>
 
 <div class="chooice">
     <ul>
@@ -141,6 +171,18 @@
         {% endif %}
     </ul>
 </div>
+
+{#最后一页码添加图片提示扫码#}
+{% if questions.0.id >= 12 %}
+    <div class="imglast">
+    {#        通过后端的图片name控制#}
+        <img src="/static/img/爱他美4期微商城-061.png" alt="" id="icon">
+    </div>
+
+{% endif %}
+
+
+
 
 {% if questions.0.id >= 12 %}
     <div class="imglast">
