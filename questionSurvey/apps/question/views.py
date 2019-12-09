@@ -31,7 +31,6 @@ def index(request):
             questions = Question.objects.filter(id=id).values('id', 'name', "answer", 'pngname')
         else:
             id = 1
-
             questions = Question.objects.filter(id= id).values('id', 'name', "answer", 'pngname')
     except Exception:
         raise Exception("id异常")
@@ -43,7 +42,7 @@ def index(request):
             i.update(answer=list_answer)
     vm = {'questions': list(questions)}
     # 只管访问页面
-
+    print ip
     Visit(ip=ip, visit_time=datetime.now(), question_id=id).save()
     return render(request, 'devQues/index.html', vm)
 
@@ -65,26 +64,19 @@ def save(request):
     # 获取ajax的传值
     answer = request.POST.get('value')
     id = request.POST.get('id')
-    print('ip = ', ip)
-    print('id = ', id)
-    # todo 保存访问的页面答案
+    # 保存访问的页面答案
     if answer and answer not in ["开始测试", "重新玩一次"]:
         AnswerInformation(ip=ip, question_id=id, answer=answer, create_time=datetime.now()).save()
     if answer == "重新玩一次":  # 重新开始
         vm = [{"id": "0"}]
     if id == "11":  # 需要判断返回12还是13 答案中选择了a就返回12 否则返回13
         datas = AnswerInformation.objects.filter(ip=ip).values('answer').order_by('-create_time')[:10]
-        print(datas)
         for data in datas:
             if data.get('answer') in ["是", "非纯母乳喂养", "严重"]:
                 vm = [{"id": "12"}]
             else:
                 vm = [{"id": "11"}]
             break
-    print(vm)
-    print(request.COOKIES)
-    print(request.session.keys())
-    print request.session.session_key
     return JsonResponse(data=vm, safe=False)
 
 

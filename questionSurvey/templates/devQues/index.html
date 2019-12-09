@@ -122,26 +122,20 @@
 
 {% if questions.0.id >= 12 %}
     <div class="imglogo">
-{#            通过后端的图片name控制#}
+    {#  图片的logo 只是在最后一页的时候显示    #}
         <img src="/static/img/爱他美4期微商城-07.png" alt="" id="icon">
     </div>
 
 {% endif %}
-{##}
-{#{% if questions.0.id == 13 %}#}
-{#    <div class="imglogo">#}
-    {#        通过后端的图片name控制#}
-{#        <img src="/static/img/爱他美4期微商城-061.png" alt="" id="icon">#}
-{#    </div>#}
-{##}
-{#{% endif %}#}
 
 
 <div class="img">
-{#        通过后端的图片name控制#}
+{#  每一页的图片显示 #}
     <img src="{{ questions.0.pngname }}" alt="" id="icon">
 </div>
 
+
+{#单机按钮的选项#}
 <div class="chooice">
     <ul>
         {% if questions %}
@@ -158,7 +152,7 @@
                                  <button>B</button>
                             </div>
                         {% endif %}
-                    {% if forloop.counter == 3 %}
+                        {% if forloop.counter == 3 %}
                             <div>
                                  <button>C</button>
                             </div>
@@ -172,25 +166,24 @@
     </ul>
 </div>
 
-{#最后一页码添加图片提示扫码#}
+
 {% if questions.0.id >= 12 %}
+    {#最后一页码添加图片提示扫码#}
     <div class="imglast">
-    {#        通过后端的图片name控制#}
         <img src="/static/img/爱他美4期微商城-061.png" alt="" id="icon">
     </div>
 
-{% endif %}
-
-
-
-
-{% if questions.0.id >= 12 %}
+    {#最后一页添加二维码#}
     <div class="imglast">
-    {#        通过后端的图片name控制#}
         <img src="/static/img/爱他美4期微商城-12.png" alt="" id="icon">
     </div>
 
 {% endif %}
+
+
+
+
+
 
 </div>
 </body>
